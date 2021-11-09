@@ -35,22 +35,22 @@ interface HttpRequest {
 
         @Override
         public String getMathod() {
-            return null;
+            return "GET";
         }
 
         @Override
         public String getPath() {
-            return null;
+            return "/user/create";
         }
 
         @Override
         public String getHeader(String key) {
-            return null;
+            return "keep-alive";
         }
 
         @Override
         public String getParameter(String key) {
-            return null;
+            return "java";
         }
     }
 }
