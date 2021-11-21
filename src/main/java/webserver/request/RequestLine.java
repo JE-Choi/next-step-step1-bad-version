@@ -8,14 +8,13 @@ import java.util.Map;
 
 @Getter
 public class RequestLine {
-    private final String method;
+    private final HttpMethod method;
     private final String path;
     private final Map<String, String> params;
 
     public RequestLine(final String line) {
         final String[] split = line.split("\\s");
-        final String method = split[0];
-        this.method = method;
+        this.method = HttpMethod.valueOf(split[0]);
         // Todo: URI객체로 분리 가능
         final String[] uri = split[1].split("\\?");
         final String path = uri[0];

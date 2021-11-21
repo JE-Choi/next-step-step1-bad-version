@@ -20,7 +20,7 @@ interface HttpRequest {
     /**
      * HTTP 메소드
      */
-    String getMathod();
+    HttpMethod getMathod();
 
     /**
      * URL
@@ -64,10 +64,10 @@ interface HttpRequest {
                 // 모든 버퍼의 데이터를 돌았으면 => 요청값에 맞게 parameter를 세팅해준다.
                 try {
                     final int contentLength = Integer.parseInt(this.header.getOrDefault("Content-Length", "0"));
-                    if (!"GET".equals(this.getMathod()) && contentLength > 0) {
+                    if (!this.getMathod().isGet() && contentLength > 0) {
                         final String body = IOUtils.readData(bufferedReader, contentLength);
                         this.parameter = HttpRequestUtils.parseQueryString(body);
-                    } else if ("GET".equals(this.getMathod())) {
+                    } else if (this.getMathod().isGet()) {
                         this.parameter = this.requestLine.getParams();
                     }
                 } catch (NumberFormatException | NullPointerException e) { }
@@ -77,7 +77,7 @@ interface HttpRequest {
         }
 
         @Override
-        public String getMathod() {
+        public HttpMethod getMathod() {
             if (Objects.isNull(this.requestLine)) {
                 logger.debug(INVALID_VALUE_MSG);
             }
